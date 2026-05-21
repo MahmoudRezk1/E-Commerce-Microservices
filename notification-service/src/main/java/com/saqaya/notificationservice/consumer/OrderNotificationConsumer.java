@@ -36,7 +36,7 @@ public class OrderNotificationConsumer {
             // Idempotency check
             if (processedMessageRepository.existsById(orderId)) {
                 log.warn("Duplicate processing detected! Order message ID {} already executed.", orderId);
-                channel.basicAck(tag, false); // ACK the message to clear it from the queue
+                channel.basicReject(tag, false);
                 return;
             }
 
